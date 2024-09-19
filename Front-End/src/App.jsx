@@ -1,8 +1,7 @@
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home"; // صفحة البداية
-import Login from "./features/auth/Login"; // مكون تسجيل الدخول
-import Register from "./features/auth/Register"; // مكون التسجيل
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import CheckoutPage from "./pages/Checkout";
 {
   /* Admin Dashboard */
