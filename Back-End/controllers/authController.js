@@ -202,7 +202,7 @@ exports.register = async (req, res) => {
       [name, email, hashedPassword, gender]
     );
 
-    // Generate JWT token
+    // Generate JWT tokenps
     const token = jwt.sign(
       { userId: newUser[0].user_id, role: newUser[0].role },
       process.env.JWT_SECRET || 'your_jwt_secret', // Use environment variable for the secret
