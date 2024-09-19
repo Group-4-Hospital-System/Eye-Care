@@ -293,7 +293,7 @@ const authSlice = createSlice({
       logout: (state) => {
         state.user = null;
         state.token = null;
-        state.error = null; // قم بإعادة تعيين الخطأ عند تسجيل الخروج
+        state.error = null; 
       },
     },
     extraReducers: (builder) => {
@@ -304,13 +304,13 @@ const authSlice = createSlice({
         })
         .addCase(login.fulfilled, (state, action) => {
           state.loading = false;
-          state.user = action.payload.user; // تأكد من استلام user
-          state.token = action.payload.token; // حفظ token في state
-          state.error = null; // لا يوجد خطأ
+          state.user = action.payload.user; 
+          state.token = action.payload.token; 
+          state.error = null; 
         })
         .addCase(login.rejected, (state, action) => {
           state.loading = false;
-          state.error = action.error.message; // حفظ رسالة الخطأ
+          state.error = action.error.message; 
         })
         .addCase(register.pending, (state) => {
           state.loading = true;
