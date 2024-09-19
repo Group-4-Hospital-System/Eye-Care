@@ -1,15 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import HomePage from './pages/HomePage'; // Adjust paths as needed
-// import LoginPage from './pages/LoginPage';
-// import UserProfilePage from './pages/UserProfilePage';
-// import AppointmentPage from './pages/AppointmentPage';
-// import PatientRecordPage from './pages/PatientRecordPage';
-// import BillingPage from './pages/BillingPage';
-// import AboutUsPage from './pages/AboutUsPage';
-// import ContactUsPage from './pages/ContactUsPage';
-// import AdminDashboard from './pages/AdminDashboard';
-import Home from './pages/Home/Home';
-import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home"; // صفحة البداية
+import Login from "./features/auth/Login"; // مكون تسجيل الدخول
+import Register from "./features/auth/Register"; // مكون التسجيل
+import CheckoutPage from "./pages/Checkout";
 {/* Admin Dashboard */}
 import Dashboard from './pages/Admin-Dashboard/Page/Home/Home';
 import UserDashboard from './pages/Admin-Dashboard/Page/Users/UserDashboard';
@@ -18,23 +11,15 @@ import ContactUsDashboard from './pages/Admin-Dashboard/Page/ContactUs/ContactUs
 import AppointmentsDashboard from './pages/Admin-Dashboard/Page/Appointments/Appointments';
  {/* End Of Admin Dashboard */}
 
+
 function App() {
   return (
     <Router>
-        {/* <NavBar/> */}
       <Routes>
-        
-         <Route path="/" element={<Home />} />
-        {/* <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<UserProfilePage />} />
-        <Route path="/appointments" element={<AppointmentPage />} />
-        <Route path="/records" element={<PatientRecordPage />} />
-        <Route path="/billing" element={<BillingPage />} />
-        <Route path="/about" element={<AboutUsPage />} />
-        <Route path="/contact" element={<ContactUsPage />} />
-        <Route path="/admin" element={<AdminDashboard />} />  */}
-        {/* Add more routes as needed */}
-
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/CheckoutPage" element={<CheckoutPage />} />
         {/* Admin Dashboard */}
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Dashboard/users" element={<UserDashboard />} />
@@ -42,7 +27,6 @@ function App() {
         <Route path="/Dashboard/Appointments" element={<AppointmentsDashboard />} />
         <Route path="/Dashboard/ContactUS" element={<ContactUsDashboard />} />
         {/* End Of Admin Dashboard */}
-        
       </Routes>
     </Router>
   );
