@@ -44,8 +44,8 @@
 // import AdminDashboard from './pages/AdminDashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home'; // صفحة البداية
-import Login from './features/auth/Login'; // مكون تسجيل الدخول
-import Register from './features/auth/Register'; // مكون التسجيل
+import Login from './pages/Login'; // مكون تسجيل الدخول
+import Register from './pages/Register'; // مكون التسجيل
 // import Profile from './features/user/Profile'; // مكون الملف الشخصي
 // import NavBar from './components/NavBar'; // المكون الأساسي لعرض الـ Navbar
 

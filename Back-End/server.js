@@ -4,12 +4,14 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const pool = require('./config/db'); // Import the database pool
 const authRoutes = require('./routes/authRoutes'); // Import your auth routes
+const cookieParser = require("cookie-parser")
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({origin: "http://localhost:5173", credentials: true }));
+app.use(bodyParser.json()); 
+app.use(cookieParser())
 
 // Test the database connection
 pool.connect((err, client, release) => {
