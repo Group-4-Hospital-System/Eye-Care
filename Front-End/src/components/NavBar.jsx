@@ -33,7 +33,7 @@ const NavBar = () => {
 
         {/* Nav Links */}
         <div className="space-x-6">
-          {['/', '/profile', '/appointments', '/billing', '/admin'].map((path, index) => (
+          {['/', '/profile', '/Doctors', '/billing', '/admin'].map((path, index) => (
             <motion.div
               key={index}
               whileHover={{ scale: 1.1 }}
