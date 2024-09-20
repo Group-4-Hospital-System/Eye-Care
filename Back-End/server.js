@@ -30,6 +30,15 @@ app.use("/api/auth", authRoutes);
 // Start the server
 const PORT = process.env.PORT || 5000;
 
+ {/* Admin Dashboard */}
+ const adminRoutes = require("./routes/adminRoutes");
+ app.use("/api/admin", adminRoutes);
+
+ const addDoctorRoutes = require("./routes/addDoctorRoutes");
+ app.use("/api/addDoctor", addDoctorRoutes);
+ {/* End Of Admin Dashboard */}
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
