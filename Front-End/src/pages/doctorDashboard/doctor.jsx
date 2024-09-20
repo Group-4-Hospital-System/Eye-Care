@@ -441,7 +441,6 @@ const DoctorDashboard = () => {
       </motion.div>
     </div>
   );
-  ``;
 
   if (loading) {
     return <LoadingScreen />;
