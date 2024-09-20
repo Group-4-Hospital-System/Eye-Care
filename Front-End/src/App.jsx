@@ -3,6 +3,8 @@ import Home from "./pages/Home/Home"; // صفحة البداية
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CheckoutPage from "./pages/Checkout";
+import ContactUsPage from "./pages/ContactUsPage";
+import AboutUs from "./pages/AboutUsPage";
 {
   /* Admin Dashboard */
 }
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/Contactus" element={<ContactUsPage />} />
+        <Route path="/Aboutus" element={<AboutUs />} />
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
         {/* Admin Dashboard */}
         <Route path="/Dashboard" element={<Dashboard />} />
