@@ -3,7 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const pool = require('./config/db'); // Import the database pool
-
+const authRoutes = require('./routes/authRoutes'); // Import your auth routes
+const userRoutes = require('./routes/appointmentRoutes');
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,9 @@ pool.connect((err, client, release) => {
 });
 
 // Use routes (your route imports will go here)
+app.use('/api/auth', authRoutes);
+
+app.use('/api/users', userRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
