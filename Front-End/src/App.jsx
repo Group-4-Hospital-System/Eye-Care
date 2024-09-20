@@ -11,10 +11,12 @@ import UserDashboard from "./pages/Admin-Dashboard/Page/Users/UserDashboard";
 import DoctorsDashboard from "./pages/Admin-Dashboard/Page/Doctors/DoctorsDashboard";
 import ContactUsDashboard from "./pages/Admin-Dashboard/Page/ContactUs/ContactUsDashboard";
 import AppointmentsDashboard from "./pages/Admin-Dashboard/Page/Appointments/Appointments";
-
 {
   /* End Of Admin Dashboard */
 }
+import DoctorDashboard from "./pages/doctorDashboard/doctor";
+import "./index.css";
+
 
 function App() {
   return (
@@ -24,6 +26,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route
+          path="/Dashboard/DoctorDashboard"
+          element={<DoctorDashboard />}
+        />
         {/* Admin Dashboard */}
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Dashboard/users" element={<UserDashboard />} />
@@ -33,7 +39,6 @@ function App() {
           element={<AppointmentsDashboard />}
         />
         <Route path="/Dashboard/ContactUS" element={<ContactUsDashboard />} />
-
         {/* End Of Admin Dashboard */}
       </Routes>
     </Router>
