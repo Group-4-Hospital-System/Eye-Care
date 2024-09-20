@@ -1,62 +1,118 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import {
   Search,
-  MoreVertical,
-  Edit,
   ChevronLeft,
   ChevronRight,
-  Trash,
+  Undo2,
   Ban,
-  Unlock ,
 } from "lucide-react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPatient,BanPatient } from "../../../../features/Admin/PatientSlice";
+import Loading from "../../components/Loading";
+import Swal from "sweetalert2"; // إضافة مكتبة sweetalert2
 const UserDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(5);
 
-  const users = [
-    {
-      id: 1,
-      name: "Ahmed Mohammed",
-      email: "ahmed@example.com",
-      role: "Admin",
-    },
-    {
-      id: 2,
-      name: "Sarah Ahmed",
-      email: "sara@example.com",
-      role: "Moderator",
-    },
-    { id: 3, name: "Mohammed Ali", email: "mohamed@example.com", role: "User" },
-    { id: 4, name: "Fatima Hassan", email: "fatima@example.com", role: "User" },
-    {
-      id: 5,
-      name: "Omar Khalid",
-      email: "omar@example.com",
-      role: "Moderator",
-    },
-    { id: 6, name: "Ali Nasser", email: "ali@example.com", role: "User" },
-    { id: 7, name: "Layla Hussein", email: "layla@example.com", role: "User" },
-  
-    // يمكنك إضافة المزيد من المستخدمين هنا
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const filteredUsers = users.filter(
+  const patients = useSelector((state) => state.Patient.Patient);
+  const patientStatus = useSelector((state) => state.Patient.status);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!patients) {
+      dispatch(fetchPatient());
+    }
+  }, [dispatch, patients]);
+
+  useEffect(() => {
+    if (patientStatus === "idle") {
+      dispatch(fetchPatient());
+    }
+  }, [dispatch, patientStatus]);
+
+  useEffect(() => {
+    if (patientStatus === "loading") {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [patientStatus]);
+
+  useEffect(() => {
+    if (patientStatus === "failed") {
+      navigate("/Signup");
+    }
+  }, [patientStatus, navigate]);
+
+  const handleBan = async (id, event) => {
+    event.preventDefault();
+    
+    Swal.fire({
+      title: 'Are you sure you want to ban this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#1f7b6f',
+      cancelButtonColor: '#848484',
+      confirmButtonText: 'Yes, ban them',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(BanPatient(id));
+        Swal.fire('Banned!', 'The user has been successfully banned.', 'success');
+        dispatch(fetchPatient());
+      }
+    });
+  };
+  
+  const handleUnBan = async (id, event) => {
+    event.preventDefault();
+    
+    Swal.fire({
+      title: 'Are you sure you want to unban this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#1f7b6f',
+      cancelButtonColor: '#848484',
+      confirmButtonText: 'Yes, unban them',
+      cancelButtonText: 'Cancel'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await dispatch(BanPatient(id));
+        Swal.fire('Unbanned!', 'The user has been successfully unbanned.', 'success');
+        dispatch(fetchPatient());
+      }
+    });
+  };
+  
+  // فلترة المستخدمين بناءً على مصطلح البحث
+  // const filteredUsers = patients?.filter(
+  //   (user) =>
+  //     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     user.gender.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+  const filteredUsers = (patients ? [...patients] : [])
+  .sort((a, b) => b.user_id - a.user_id) // ترتيب الأطباء بناءً على user_id بشكل تنازلي
+  .filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.role.toLowerCase().includes(searchTerm.toLowerCase())
+      user.gender.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // حساب عدد الصفحات
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const totalPages = Math.ceil(filteredUsers?.length / usersPerPage);
 
   // حساب المستخدمين في الصفحة الحالية
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filteredUsers?.slice(indexOfFirstUser, indexOfLastUser);
 
   // الانتقال للصفحة التالية
   const nextPage = () => {
@@ -79,7 +135,6 @@ const UserDashboard = () => {
                 <h1 className="text-2xl font-semibold text-gray-900">
                   User Management
                 </h1>
-       
               </div>
               <div className="my-4 flex sm:flex-row flex-col">
                 <div className="flex flex-row mb-1 sm:mb-0">
@@ -93,15 +148,6 @@ const UserDashboard = () => {
                       <option value={10}>10</option>
                       <option value={20}>20</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <svg
-                        className="fill-current h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </div>
                   </div>
                 </div>
                 <div className="block relative mt-2 sm:mt-0">
@@ -117,15 +163,15 @@ const UserDashboard = () => {
                 </div>
               </div>
               <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden ">
-                  <table className="min-w-full leading-normal ">
+                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                  <table className="min-w-full leading-normal">
                     <thead>
                       <tr>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-[#1f7b6f] text-left text-xs font-semibold text-white uppercase tracking-wider">
                           User
                         </th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-[#1f7b6f] text-left text-xs font-semibold text-white uppercase tracking-wider">
-                          Role
+                          Gender
                         </th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-[#1f7b6f] text-left text-xs font-semibold text-white uppercase tracking-wider">
                           Email
@@ -136,8 +182,8 @@ const UserDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentUsers.map((user) => (
-                        <tr key={user.id}>
+                      {currentUsers?.map((user) => (
+                        <tr key={user.user_id}>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div className="flex items-center">
                               <div className="flex-shrink-0 w-10 h-10">
@@ -156,7 +202,7 @@ const UserDashboard = () => {
                           </td>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p className="text-gray-900 whitespace-no-wrap">
-                              {user.role}
+                              {user.gender}
                             </p>
                           </td>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -166,20 +212,27 @@ const UserDashboard = () => {
                           </td>
                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div className="flex items-center space-x-4">
-                              <button title="Edit User" className="text-blue-500 hover:text-blue-600">
-                                <Edit size={18} />
-                              </button>
-                              <button title="Ban User" className="text-red-500 hover:text-red-600">
-                                <Ban size={18} />
-                              </button>
+                             {user.isactive?  <button
+                              onClick={(e) => handleBan(user.user_id, e)}
+                                title="Ban User"
+                                className="flex items-center text-white bg-gradient-to-r from-[#ff494c] to-[#ff494c] focus:ring-4 focus:ring-green-300 rounded-lg px-4 py-2 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+                              >
+                                Ban <Ban size={15} className="ml-2" />
+                              </button> :  <button
+                              onClick={(e) => handleUnBan(user.user_id, e)}
+                                title="Ban User"
+                                className="flex items-center text-white bg-gradient-to-r from-[#1F7B6F] to-[#1F7B6F] focus:ring-4 focus:ring-green-300 rounded-lg px-4 py-2 transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+                              >
+                                UnBan <Undo2 size={15} className="ml-2" />
+                              </button>}
                             </div>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  {/* Pagination controls */}
 
+                  {/* Pagination controls */}
                   <div className="flex justify-center items-center mt-4 mb-4">
                     <button
                       onClick={prevPage}
@@ -194,7 +247,7 @@ const UserDashboard = () => {
                     </button>
 
                     <span className="text-gray-700 flex items-center space-x-2 ml-2">
-                      <span className="">
+                      <span>
                         Page {currentPage} of {totalPages}
                       </span>
                       <button
