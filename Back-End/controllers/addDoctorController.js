@@ -38,7 +38,7 @@ exports.addDoctor = async (req, res) => {
     const { rows: newUser } = await pool.query(
       `INSERT INTO users (name, email, password, role, gender) 
       VALUES ($1, $2, $3, 'doctor', $4) RETURNING *`,
-      [name, email, hashedPassword, gender]
+      ["Dr."+name, email, hashedPassword, gender]
     );
 
     // Send email notification
