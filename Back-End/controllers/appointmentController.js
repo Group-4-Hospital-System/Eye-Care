@@ -29,168 +29,27 @@ const getDoctorById = async (req, res) => {
 };
 
 
-const getAllAppointments = async (req, res) => {
-    try {
-      const result = await pool.query('SELECT * FROM appointments');
-      res.json(result.rows);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
   
-  // Get appointment by ID
-  const getAppointmentById = async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await pool.query('SELECT * FROM appointments WHERE appointment_id = $1', [id]);
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Appointment not found' });
-      }
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
-  
-  // Create a new appointment
-  const createAppointment = async (req, res) => {
-    const { doctor_id, appointment_start, appointment_end, booking_status, status, notes } = req.body;
-    try {
-      const result = await pool.query(
-        'INSERT INTO appointments (doctor_id, appointment_start, appointment_end, booking_status, status, notes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [doctor_id, appointment_start, appointment_end, booking_status, status, notes]
-      );
-      res.status(201).json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
-  
-  // Update an appointment
-  const updateAppointment = async (req, res) => {
-    const { id } = req.params;
-    const { doctor_id, appointment_start, appointment_end, booking_status, status, notes } = req.body;
-    try {
-      const result = await pool.query(
-        'UPDATE appointments SET doctor_id = $1, appointment_start = $2, appointment_end = $3, booking_status = $4, status = $5, notes = $6 WHERE appointment_id = $7 RETURNING *',
-        [doctor_id, appointment_start, appointment_end, booking_status, status, notes, id]
-      );
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Appointment not found' });
-      }
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
-  
-  // Delete an appointment
-  const deleteAppointment = async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await pool.query('DELETE FROM appointments WHERE appointment_id = $1 RETURNING *', [id]);
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'Appointment not found' });
-      }
-      res.json({ message: 'Appointment deleted successfully' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  };
 
 
-//   const getAppointmentsByDoctorId = async (req, res) => {
-//     const doctorId = parseInt(req.params.doctorId, 10);
-  
-//     if (isNaN(doctorId)) {
-//       return res.status(400).json({ message: 'Invalid doctor ID' });
-//     }
-  
-//     try {
-//       // Query to fetch appointments for the specific doctor
-//       const result = await pool.query(`
-//         SELECT
-//             appointment_id,
-//             appointment_start,
-//             appointment_end,
-//             booking_status,
-//             status AS appointment_status,
-//             notes
-//         FROM
-//             appointments
-//         WHERE
-//             doctor_id = $1
-//         ORDER BY
-//             appointment_start;
-//       `, [doctorId]);
-  
-//       // Check if any appointments were found
-//       if (result.rows.length === 0) {
-//         return res.status(404).json({ message: 'No appointments found for this doctor' });
-//       }
-  
-//       // Respond with the list of appointments
-//       res.json(result.rows);
-//     } catch (error) {
-//       console.error('Error fetching appointments for doctor:', error);
-//       res.status(500).send('Internal Server Error');
-//     }
-//   };
-  
-  
-const getAppointmentsByDoctorId = async (req, res) => {
-    const doctorId = parseInt(req.params.doctorId, 10);
 
-    if (isNaN(doctorId)) {
-        return res.status(400).json({ message: 'Invalid doctor ID' });
-    }
+const getDoctorAppointments = async (req, res) => {
+  const doctorId = req.params.doctorId;
 
-    try {
-        // Query to fetch appointments for the specific doctor
-        const result = await pool.query(`
-            SELECT
-                appointment_id,
-                appointment_start,
-                appointment_end,
-                booking_status,
-                status AS appointment_status,
-                notes
-            FROM
-                appointments
-            WHERE
-                doctor_id = $1
-            ORDER BY
-                appointment_start;
-        `, [doctorId]);
-
-        console.log('Query Result:', result.rows); // Add this line to debug
-
-        // Check if any appointments were found
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'No appointments found for this doctor' });
-        }
-
-        // Respond with the list of appointments
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching appointments for doctor:', error);
-        res.status(500).send('Internal Server Error');
-    }
+  try {
+    const result = await pool.query(
+      'SELECT * FROM staff_schedules WHERE doctor_id = $1 ORDER BY start_time ASC',
+      [doctorId]
+    );
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching appointments:', err);
+    res.status(500).json({ error: 'Database query error' });
+  }
 };
-
   
 module.exports = {
   getAllDoctors,
   getDoctorById,
-  getAllAppointments,
-  getAppointmentById,
-  createAppointment,
-  updateAppointment,
-  deleteAppointment,
-  getAppointmentsByDoctorId
+  getDoctorAppointments
 };

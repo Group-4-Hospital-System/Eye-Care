@@ -30,9 +30,10 @@ import "./index.css";
 // import AboutUsPage from './pages/AboutUsPage';
 // import ContactUsPage from './pages/ContactUsPage';
 // import AdminDashboard from './pages/AdminDashboard';
-// import Home from "./pages/Home/Home"; // صفحة البداية
-// import Login from "./pages/Login"; // مكون تسجيل الدخول
-// import Register from "./pages/Register"; // مكون التسجيل
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import Home from './pages/Home/Home'; // صفحة البداية
+// import Login from './pages/Login'; // مكون تسجيل الدخول
+// import Register from './pages/Register'; // مكون التسجيل
 // import Profile from './features/user/Profile'; // مكون الملف الشخصي
 // import NavBar from './components/NavBar'; // المكون الأساسي لعرض الـ Navbar
 import Doctors from "./pages/Doctors";
@@ -45,7 +46,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/Doctors" element={<Doctors />} />
+        <Route path="/Appointments" element={<Doctors />} />
         <Route path="/Doctors/:id" element={<DoctorDetails />} />
 
         {/* <Route path="/profile" element={<Profile />} /> */}

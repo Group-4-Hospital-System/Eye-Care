@@ -105,7 +105,7 @@ const NavBar = () => {
 
     // Check for the cookie when the component mounts
     const checkLoginStatus = () => {
-      const cookieValue = getCookieValue("authToken"); // Replace "authToken" with your actual cookie name
+      const cookieValue = getCookieValue(""); // Replace "authToken" with your actual cookie name
       console.log("Cookie Value:", cookieValue); // Debugging: Check if the cookie is present
       setIsLoggedIn(!!cookieValue); // Set isLoggedIn based on whether the cookie exists
     };
@@ -134,7 +134,7 @@ const NavBar = () => {
 
         {/* Nav Links */}
         <div className="space-x-6">
-          {["/", "/profile", "/appointments", "/billing", "/admin"].map(
+          {["/", "/profile", "/appointments", "/Contactus", "/admin"].map(
             (path, index) => (
               <motion.div
                 key={index}

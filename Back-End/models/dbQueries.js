@@ -67,3 +67,14 @@
 //     status VARCHAR(20) CHECK (status IN ('completed', 'canceled')),
 //     notes TEXT
 // );
+
+
+
+// CREATE TABLE staff_schedules (
+//     schedule_id SERIAL PRIMARY KEY,
+//     doctor_id INTEGER REFERENCES users(user_id),
+//     start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+//     end_time TIMESTAMP WITH TIME ZONE NOT NULL,
+//     is_available BOOLEAN DEFAULT true,
+//     is_payed BOOLEAN DEFAULT false
+// );

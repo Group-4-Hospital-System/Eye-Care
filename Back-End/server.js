@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const pool = require("./config/db"); // Import the database pool
 const authRoutes = require("./routes/authRoutes"); // Import your auth routes
 const userRoutes = require("./routes/appointmentRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
@@ -29,6 +30,7 @@ pool.connect((err, client, release) => {
 app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
+app.use("/api/contact", contactRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
