@@ -1,173 +1,14 @@
-// // src/features/auth/Login.js
-// import { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { login } from './authSlice';
-
-// const Login = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const dispatch = useDispatch();
-//   const { loading, error } = useSelector((state) => state.auth);
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     dispatch(login({ email, password }));
-//   };
-
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Email"
-//         />
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//         />
-//         <button type="submit" disabled={loading}>
-//           {loading ? 'Logging in...' : 'Login'}
-//         </button>
-//       </form>
-//       {error && <p>{error}</p>}
-//     </div>
-//   );
-// };
-
-// export default Login;
-////////////////////////////////////////////////////////////
-// import React, { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { login } from './authSlice';
-// import { useNavigate } from 'react-router-dom';
-
-// const Login = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const dispatch = useDispatch();
-//   const { loading, error, user } = useSelector((state) => state.auth);
-//   const navigate = useNavigate();
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     dispatch(login({ email, password }));
-//   };
-
-//   // Use useEffect to redirect user after successful login based on role
-//   useEffect(() => {
-//     if (user) {
-//       // Check user's role and navigate accordingly
-//       if (user.role === 'admin') {
-//         navigate('/admin-dashboard');
-//       } else if (user.role === 'patient') {
-//         navigate('/patient-dashboard');
-//       } else {
-//         navigate('/home');
-//       }
-//     }
-//   }, [user, navigate]);
-
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Email"
-//         />
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//         />
-//         <button type="submit" disabled={loading}>
-//           {loading ? 'Logging in...' : 'Login'}
-//         </button>
-//       </form>
-//       {error && <p>{error}</p>}
-//     </div>
-//   );
-// };
-
-// export default Login;
-/////////////////////////////////////////////////////////
-// import  { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { login } from '../features/auth/authSlice';
-// import { useNavigate } from 'react-router-dom';
-
-// const Login = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const dispatch = useDispatch();
-//   const { loading, error, user } = useSelector((state) => state.auth);
-//   const navigate = useNavigate();
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     dispatch(login({ email, password }));
-//   };
-
-//   // Use useEffect to redirect user after successful login based on role
-//   useEffect(() => {
-//     if (user) {
-//       // Check user's role and navigate accordingly
-//       if (user.role === 'admin') {
-//         navigate('/Front-End/src/pages/AdminDashboard.jsx');
-//       } else if (user.role === 'doctor') {
-//         navigate('/Front-End/src/pages/ProfilePage.jsx');
-//       } else {
-//         navigate('/home'); // Default page for other roles
-//       }
-//     }
-//   }, [user, navigate]);
-
-//   return (
-//     <div>
-//       <h1>Login</h1>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Email"
-//         />
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           placeholder="Password"
-//         />
-//         <button type="submit" disabled={loading}>
-//           {loading ? 'Logging in...' : 'Login'}
-//         </button>
-//       </form>
-//       {error && <p>{error}</p>}
-//     </div>
-//   );
-// };
-
-// export default Login;
-////////////////////////////////////////////////////////
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
-import { Eye, Mail, Lock, UserCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
-import Swal from 'sweetalert2';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { Eye, Mail, Lock, UserCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -177,33 +18,33 @@ const Login = () => {
     try {
       await dispatch(login({ email, password })).unwrap();
       Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome back!',
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome back!",
         timer: 1500,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
     } catch (err) {
       Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: err.message || 'An error occurred during login.',
+        icon: "error",
+        title: "Login Failed",
+        text: err.message || "An error occurred during login.",
       });
     }
   };
   useEffect(() => {
-        if (user) {
-          // Check user's role and navigate accordingly
-          if (user.role === 'admin') {
-            navigate('AdminDashboard/');
-          } else if (user.role === 'doctor') {
-            navigate('');
-          } else {
-            navigate('/'); // Default page for other roles
-          }
-        }
-      }, [user, navigate]);
-    
+    if (user) {
+      // Check user's role and navigate accordingly
+      if (user.role === "admin") {
+        navigate("AdminDashboard/");
+        // } else if (user.role === "doctor") {
+        //   navigate("");
+      } else {
+        navigate("/"); // Default page for other roles
+      }
+    }
+  }, [user, navigate]);
+
   return (
     <div className="min-h-screen bg-mintL flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -212,7 +53,7 @@ const Login = () => {
       <Eye className="absolute top-1/4 right-1/4 h-24 w-24 text-mint opacity-20" />
       <UserCheck className="absolute bottom-1/4 left-1/4 h-18 w-18 text-mintD opacity-20" />
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -279,7 +120,7 @@ const Login = () => {
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <Eye className="h-6 w-6 text-mintL group-hover:text-white" />
               </span>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </motion.button>
           </div>
         </form>
