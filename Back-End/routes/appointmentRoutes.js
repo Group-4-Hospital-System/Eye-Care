@@ -10,7 +10,7 @@ const {
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
 } = require("../controllers/appointmentController");
-
+const auth = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 router.get("/doctors", getAllDoctors);

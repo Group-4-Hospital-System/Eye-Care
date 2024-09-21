@@ -228,7 +228,9 @@ const getallAppointmentswithDoctorsAndUsers = async (req, res) => {
   try {
     const doctor_id = req.user;
     const appointments = await pool.query(
-      `SELECT * FROM appointments JOIN users on appointments.patient_id = users.id JOIN users on appointments.doctor_id = users.id WHERE doctor_id = $1`,
+      `SELECT * FROM appointments 
+   JOIN users AS patients ON appointments.patient_id = patients.user_id 
+   WHERE appointments.doctor_id = $1`,
       [doctor_id]
     );
     res.json(appointments.rows);

@@ -17,7 +17,6 @@ import AppointmentsDashboard from "./pages/Admin-Dashboard/Page/Appointments/App
 import DoctorDashboard from "./pages/doctorDashboard/doctor";
 import "./index.css";
 
-
 // import HomePage from './pages/HomePage'; // Adjust paths as needed
 // import LoginPage from './pages/LoginPage';
 // import UserProfilePage from './pages/UserProfilePage';
@@ -27,14 +26,10 @@ import "./index.css";
 // import AboutUsPage from './pages/AboutUsPage';
 // import ContactUsPage from './pages/ContactUsPage';
 // import AdminDashboard from './pages/AdminDashboard';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home/Home'; // صفحة البداية
-import Login from './pages/Login'; // مكون تسجيل الدخول
-import Register from './pages/Register'; // مكون التسجيل
 // import Profile from './features/user/Profile'; // مكون الملف الشخصي
 // import NavBar from './components/NavBar'; // المكون الأساسي لعرض الـ Navbar
-import Doctors from './pages/Doctors';
-import DoctorDetails from './pages/DoctorDetails';
+import Doctors from "./pages/Doctors";
+import DoctorDetails from "./pages/DoctorDetails";
 
 function App() {
   return (
