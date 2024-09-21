@@ -6,6 +6,7 @@ const pool = require("./config/db"); // Import the database pool
 const authRoutes = require("./routes/authRoutes"); // Import your auth routes
 const userRoutes = require("./routes/appointmentRoutes");
 const staffRouter = require("./routes/staffRouter");
+const medicalRecordsRouter = require("./routes/medicalRecordsRouter");
 
 const cookieParser = require("cookie-parser");
 
@@ -32,6 +33,7 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
 app.use("/api/staff", staffRouter);
+app.use("/api/medical-records", medicalRecordsRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

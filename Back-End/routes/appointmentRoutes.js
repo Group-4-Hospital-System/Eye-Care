@@ -9,6 +9,7 @@ const {
   deleteAppointment,
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
+  changeAppiontmentStatus,
   // getDoctorAppointments
 } = require("../controllers/appointmentController");
 const auth = require("../middlewares/authMiddleware");
@@ -22,6 +23,7 @@ router.post("/appointments", createAppointment);
 router.put("/appointments/:id", updateAppointment);
 router.delete("/appointments/:id", deleteAppointment);
 router.get("/appointments/:doctorId", getAppointmentsByDoctorId);
+router.post("/change-appointment-status", changeAppiontmentStatus);
 
 // router.get('/appointments/:doctorId', getDoctorAppointments);
 

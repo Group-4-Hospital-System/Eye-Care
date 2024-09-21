@@ -76,16 +76,25 @@ const AppointmentsTab = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      // console.log("Selected appointment:", selectedAppointment);
+      console.log("Selected appointment:", {
+        ...selectedAppointment,
+        ...formData,
+      });
       await axios.post(
-        "http://localhost:5000/api/medical-records",
+        "http://localhost:5000/api/medical-records/add-medical-record",
         {
           patient_id: selectedAppointment.patient_id,
           doctor_id: selectedAppointment.doctor_id,
           date: selectedAppointment.appointment_date,
           ...formData,
-        },
-        { withCredentials: true }
+        }
+      );
+      await axios.post(
+        "http://localhost:5000/api/users/change-appointment-status",
+        {
+          appointment_id: selectedAppointment.id,
+          status: "completed",
+        }
       );
       handleCloseForm();
       // Optionally, refresh appointments or update the local state

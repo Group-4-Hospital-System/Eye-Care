@@ -230,7 +230,7 @@ const getallAppointmentswithDoctorsAndUsers = async (req, res) => {
     const appointments = await pool.query(
       `SELECT * FROM appointments 
    JOIN users AS patients ON appointments.patient_id = patients.user_id 
-   WHERE appointments.doctor_id = $1`,
+   WHERE appointments.doctor_id = $1 AND appointments.status = 'scheduled'`,
       [doctor_id]
     );
     res.json(appointments.rows);
@@ -255,6 +255,20 @@ const getDoctorAppointments = async (req, res) => {
   }
 };
 
+const changeAppiontmentStatus = async (req, res) => {
+  const { appointment_id, status } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE appointments SET status = $1 WHERE appointment_id = $2 RETURNING *",
+      [status, appointment_id]
+    );
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getAllDoctors,
   getDoctorById,
@@ -266,4 +280,5 @@ module.exports = {
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
   getDoctorAppointments,
+  changeAppiontmentStatus,
 };

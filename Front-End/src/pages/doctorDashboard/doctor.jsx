@@ -11,8 +11,6 @@ import LoadingScreen from "./LoadingScreen";
 import AppointmentModal from "./AppointmentModal";
 const DoctorDashboard = () => {
   const [loading, setLoading] = useState(true);
-  const [appointments, setAppointments] = useState([]);
-  const [patients, setPatients] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
@@ -45,29 +43,29 @@ const DoctorDashboard = () => {
       //   },
       // ]);
 
-      setPatients([
-        {
-          id: 1,
-          name: "John Doe",
-          age: 45,
-          lastVisit: "2024-03-15",
-          condition: "Hypertension",
-        },
-        {
-          id: 2,
-          name: "Jane Smith",
-          age: 32,
-          lastVisit: "2024-04-02",
-          condition: "Asthma",
-        },
-        {
-          id: 3,
-          name: "Bob Johnson",
-          age: 58,
-          lastVisit: "2024-02-28",
-          condition: "Diabetes",
-        },
-      ]);
+      // setPatients([
+      //   {
+      //     id: 1,
+      //     name: "John Doe",
+      //     age: 45,
+      //     lastVisit: "2024-03-15",
+      //     condition: "Hypertension",
+      //   },
+      //   {
+      //     id: 2,
+      //     name: "Jane Smith",
+      //     age: 32,
+      //     lastVisit: "2024-04-02",
+      //     condition: "Asthma",
+      //   },
+      //   {
+      //     id: 3,
+      //     name: "Bob Johnson",
+      //     age: 58,
+      //     lastVisit: "2024-02-28",
+      //     condition: "Diabetes",
+      //   },
+      // ]);
 
       // setProfile({
       //   name: "Dr. Sarah Williams",
@@ -133,7 +131,7 @@ const DoctorDashboard = () => {
             <AppointmentsTab setSelectedAppointment={setSelectedAppointment} />
           </TabsContent>
           <TabsContent value="patient-records">
-            <PatientRecordsTab patients={patients} />
+            <PatientRecordsTab />
           </TabsContent>
           <TabsContent value="profile">
             <ProfileTab />
