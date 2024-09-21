@@ -1,12 +1,13 @@
-
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
 import userReducer from "./features/user/userSlice";
+
 import PatientSlice from "./features/Admin/PatientSlice";
 import DoctorSlice from "./features/Admin/DoctorSlice";
 import ContactMessages from "./features/Admin/ContactMessages";
-import doctorReducer from './features/Doctors/doctorSlices';
-import appointmentsReducer from './features/Doctors/appointmentsSlice';
+
+import doctorReducer from "./features/Doctors/doctorSlices";
+import appointmentsReducer from "./features/Doctors/appointmentsSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,8 +18,7 @@ const store = configureStore({
 
     Patient: PatientSlice,
     Doctor: DoctorSlice,
-    contactMessages:ContactMessages
-
+    contactMessages: ContactMessages,
   },
 });
 

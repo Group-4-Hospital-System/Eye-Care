@@ -1,51 +1,50 @@
-
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
-import { Eye, Mail, Lock, UserCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
-import Swal from 'sweetalert2';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { Eye, Mail, Lock, UserCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error, user } = useSelector(state => state.auth);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       await dispatch(login({ email, password })).unwrap();
       Swal.fire({
-        icon: 'success',
-        title: 'Login Successful',
-        text: 'Welcome back!',
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome back!",
         timer: 1500,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
     } catch (err) {
       Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: err.message || 'An error occurred during login.',
+        icon: "error",
+        title: "Login Failed",
+        text: err.message || "An error occurred during login.",
       });
     }
   };
   useEffect(() => {
-        if (user) {
-          // Check user's role and navigate accordingly
-          if (user.role === 'admin') {
-            navigate('AdminDashboard/');
-          } else if (user.role === 'doctor') {
-            navigate('');
-          } else {
-            navigate('/'); // Default page for other roles
-          }
-        }
-      }, [user, navigate]);
-    
+    if (user) {
+      // Check user's role and navigate accordingly
+      if (user.role === "admin") {
+        navigate("AdminDashboard/");
+      } else if (user.role === "doctor") {
+        navigate("/Dashboard/DoctorDashboard");
+      } else {
+        navigate("/"); // Default page for other roles
+      }
+    }
+  }, [user, navigate]);
+
   return (
     <div className="min-h-screen bg-mintL flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -54,7 +53,7 @@ const Login = () => {
       <Eye className="absolute top-1/4 right-1/4 h-24 w-24 text-mint opacity-20" />
       <UserCheck className="absolute bottom-1/4 left-1/4 h-18 w-18 text-mintD opacity-20" />
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -84,7 +83,7 @@ const Login = () => {
                   className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-mintD focus:border-mintD focus:z-10 text-lg"
                   placeholder="Email address"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                 />
                 <Mail className="absolute right-3 top-3 h-6 w-6 text-mint" />
               </div>
@@ -103,7 +102,7 @@ const Login = () => {
                   className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-mintD focus:border-mintD focus:z-10 text-lg"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                 />
                 <Lock className="absolute right-3 top-3 h-6 w-6 text-mint" />
               </div>
@@ -121,7 +120,7 @@ const Login = () => {
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <Eye className="h-6 w-6 text-mintL group-hover:text-white" />
               </span>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </motion.button>
           </div>
         </form>
@@ -140,4 +139,3 @@ const Login = () => {
 };
 
 export default Login;
-
