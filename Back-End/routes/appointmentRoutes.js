@@ -9,6 +9,7 @@ const {
   deleteAppointment,
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
+  // getDoctorAppointments
 } = require("../controllers/appointmentController");
 const auth = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -21,6 +22,8 @@ router.post("/appointments", createAppointment);
 router.put("/appointments/:id", updateAppointment);
 router.delete("/appointments/:id", deleteAppointment);
 router.get("/appointments/:doctorId", getAppointmentsByDoctorId);
+
+// router.get('/appointments/:doctorId', getDoctorAppointments);
 
 router.get(
   "/getallAppointmentswithDoctorsAndUsers",

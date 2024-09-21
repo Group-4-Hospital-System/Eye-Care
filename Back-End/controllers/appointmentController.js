@@ -239,6 +239,22 @@ const getallAppointmentswithDoctorsAndUsers = async (req, res) => {
     res.status(500).json({ message: "Error getting appointments" });
   }
 };
+
+const getDoctorAppointments = async (req, res) => {
+  const doctorId = req.params.doctorId;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM staff_schedules WHERE doctor_id = $1 ORDER BY start_time ASC",
+      [doctorId]
+    );
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error("Error fetching appointments:", err);
+    res.status(500).json({ error: "Database query error" });
+  }
+};
+
 module.exports = {
   getAllDoctors,
   getDoctorById,
@@ -249,4 +265,5 @@ module.exports = {
   deleteAppointment,
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
+  getDoctorAppointments,
 };
