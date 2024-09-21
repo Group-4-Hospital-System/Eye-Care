@@ -3,11 +3,10 @@ import axios from "axios";
 // Login API
 export const loginAPI = async (credentials) => {
   try {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
-      credentials,
-      { withCredentials: true }
-    );
+
+    const response = await axios.post('http://localhost:5000/api/auth/login', credentials, {withCredentials: true});
+
+
     return response.data;
   } catch (error) {
     console.error(
@@ -20,11 +19,11 @@ export const loginAPI = async (credentials) => {
 
 export const registerAPI = async (userData) => {
   try {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      userData,
-      { withCredentials: true }
-    );
+
+
+    const response = await axios.post('http://localhost:5000/api/auth/register', userData, {withCredentials: true });
+
+
     return response.data;
   } catch (error) {
     console.error(
