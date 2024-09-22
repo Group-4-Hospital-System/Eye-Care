@@ -156,3 +156,79 @@ exports.ReplyContactMessages = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+exports.getAppointments = async (req, res) => {
+  try {
+    const appointmentsQuery = `
+      SELECT 
+        a.*,
+        u_doctor.name AS doctor_name,
+        u_patient.name AS patient_name,
+        b.amount AS billing_amount
+      FROM 
+        appointments a
+      JOIN 
+        users u_doctor ON a.doctor_id = u_doctor.user_id
+      JOIN 
+        users u_patient ON a.patient_id = u_patient.user_id
+      JOIN 
+        billing b ON a.appointment_id = b.appointment_id
+    `;
+
+    const appointmentsResult = await pool.query(appointmentsQuery);
+
+    res.json(appointmentsResult.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.appointments = async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params; // احصل على id من معلمات URL
+
+  try {
+    const result = await pool.query("UPDATE appointments SET status = $1 WHERE appointment_id = $2", [status, id]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Appointment not found" });
+    }
+
+    res.json({ message: "Appointment updated successfully" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getAdmin = async (req, res) => {
+  try {
+    const userId = req.user;
+
+    // جلب المستخدم بشرط أن يكون دوره "admin"
+    const { rows: Admin } = await pool.query(
+      "SELECT * FROM users WHERE user_id = $1 AND role = 'admin'",
+      [userId]
+    );
+    if (!Admin.length) {
+      return res.status(400).json({ message: "Admin not found or access denied" });
+    }
+    return res.status(200).json({ user: Admin[0] });
+  } catch (err) {
+    console.error("Error in getAdmin:", err.message);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.LogOutAdmin= async (req, res) => {
+  try {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'You have successfully logged out' });
+  } catch (err) {
+    console.error("Error in logged out:", err.message);
+  }
+};
