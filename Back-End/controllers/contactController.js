@@ -1,7 +1,7 @@
 // controllers/contactController.js
 const ContactModel = require("../models/contactModel");
 
-exports.submitContact = async (req, res) => {
+const submitContact = async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
@@ -31,3 +31,5 @@ exports.submitContact = async (req, res) => {
     });
   }
 };
+
+module.exports = { submitContact };

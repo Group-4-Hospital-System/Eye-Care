@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home"; // صفحة البداية
 import Login from "./pages/Login"; // مكون تسجيل الدخول
 import Register from "./pages/Register"; // مكون التسجيل
 import CheckoutPage from "./pages/Checkout";
+import ProtectedRoute from "./components/protectedRoutes";
 import ContactUsPage from "./pages/ContactUsPage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ import AboutUs from "./pages/AboutUsPage";
 {
   /* Admin Dashboard */
 }
+import ProfilePage from "./pages/ProfilePage";
 import Dashboard from "./pages/Admin-Dashboard/Page/Home/Home";
 import UserDashboard from "./pages/Admin-Dashboard/Page/Users/UserDashboard";
 import DoctorsDashboard from "./pages/Admin-Dashboard/Page/Doctors/DoctorsDashboard";
@@ -30,11 +32,12 @@ import "./index.css";
 // import AboutUsPage from './pages/AboutUsPage';
 // import ContactUsPage from './pages/ContactUsPage';
 // import AdminDashboard from './pages/AdminDashboard';
+
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import Home from './pages/Home/Home'; // صفحة البداية
 // import Login from './pages/Login'; // مكون تسجيل الدخول
 // import Register from './pages/Register'; // مكون التسجيل
-// import Profile from './features/user/Profile'; // مكون الملف الشخصي
+// import Profile from "./features/user/Profile"; // مكون الملف الشخصي
 // import NavBar from './components/NavBar'; // المكون الأساسي لعرض الـ Navbar
 import Doctors from "./pages/Doctors";
 import DoctorDetails from "./pages/DoctorDetails";
@@ -61,6 +64,7 @@ function App() {
         <Route path="/Contactus" element={<ContactUsPage />} />
         <Route path="/Aboutus" element={<AboutUs />} />
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
+
         <Route
           path="/Dashboard/DoctorDashboard"
           element={<DoctorDashboard />}
@@ -69,10 +73,14 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Dashboard/users" element={<UserDashboard />} />
         <Route path="/Dashboard/Doctors" element={<DoctorsDashboard />} />
-        <Route
-          path="/Dashboard/Appointments"
-          element={<AppointmentsDashboard />}
-        />
+
+        <Route element={<ProtectedRoute />}>
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route
+            path="/Dashboard/Appointments"
+            element={<AppointmentsDashboard />}
+          />
+        </Route>
         <Route path="/Dashboard/ContactUS" element={<ContactUsDashboard />} />
         {/* End Of Admin Dashboard */}
       </Routes>

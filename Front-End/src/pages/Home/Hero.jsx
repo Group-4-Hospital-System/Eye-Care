@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Eye, Shield, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Eye, Shield, Calendar } from "lucide-react";
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,61 +11,74 @@ const Hero = () => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { duration: 0.5, when: "beforeChildren", staggerChildren: 0.2 }
-    }
+      transition: {
+        duration: 0.5,
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="relative h-screen bg-gradient-to-br from-white to-[#eafffb] to-mint overflow-hidden"
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
       variants={containerVariants}
     >
       {/* Animated background elements */}
-      <motion.div 
+      <motion.div
         className="absolute top-0 left-0 w-full h-full"
-        animate={{ 
+        animate={{
           background: [
             "radial-gradient(circle, [#eafffb] 0%, [#eafffb] 70%)",
-            "radial-gradient(circle, [#eafffb] 100%, [#eafffb] 100%)"
-          ]
+            "radial-gradient(circle, [#eafffb] 100%, [#eafffb] 100%)",
+          ],
         }}
         transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
       />
 
       <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center relative z-10">
-        <motion.h1 
+        <motion.h1
           className="text-5xl md:text-7xl font-bold text-mintD mb-6"
           variants={itemVariants}
         >
           See the World Clearly
         </motion.h1>
-        
-        <motion.p 
+        <motion.p
           className="text-xl md:text-2xl text-mint mb-8"
           variants={itemVariants}
         >
           Advanced eye care for a brighter future
         </motion.p>
-
-        <motion.div 
+        <motion.div
           className="flex flex-wrap justify-center gap-4 mb-12"
           variants={itemVariants}
         >
-          <FeatureCard icon={<Eye size={32} />} title="Expert Care" description="Cutting-edge diagnostics" />
-          <FeatureCard icon={<Shield size={32} />} title="Protection" description="Preventive eye health" />
-          <FeatureCard icon={<Calendar size={32} />} title="Convenience" description="Easy online booking" />
+          <FeatureCard
+            icon={<Eye size={32} />}
+            title="Expert Care"
+            description="Cutting-edge diagnostics"
+          />
+          <FeatureCard
+            icon={<Shield size={32} />}
+            title="Protection"
+            description="Preventive eye health"
+          />
+          <FeatureCard
+            icon={<Calendar size={32} />}
+            title="Convenience"
+            description="Easy online booking"
+          />
         </motion.div>
-
-        <motion.button 
+        <motion.button
           className="bg-mintD text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-mint transition-colors duration-300"
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
@@ -73,12 +86,13 @@ const Hero = () => {
         >
           Book an Appointment
         </motion.button>
+        ``
       </div>
 
       {/* Animated iris */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500 rounded-full opacity-20"
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
           rotate: [0, 180, 360],
         }}
@@ -89,7 +103,7 @@ const Hero = () => {
 };
 
 const FeatureCard = ({ icon, title, description }) => (
-  <motion.div 
+  <motion.div
     className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg flex flex-col items-center w-64"
     whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
   >
@@ -100,8 +114,6 @@ const FeatureCard = ({ icon, title, description }) => (
 );
 
 export default Hero;
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import { motion } from 'framer-motion';
@@ -141,7 +153,7 @@ export default Hero;
 //   return (
 //     <div className="relative h-screen bg-gray-100 overflow-hidden">
 //       <div className="container mx-auto px-4 h-full flex flex-col justify-center items-start">
-//         <motion.h1 
+//         <motion.h1
 //           className="text-6xl md:text-8xl font-bold text-gray-900 mb-6"
 //           initial={{ opacity: 0, y: 20 }}
 //           animate={{ opacity: 1, y: 0 }}
@@ -149,8 +161,8 @@ export default Hero;
 //         >
 //           Vision<br />Perfected
 //         </motion.h1>
-        
-//         <motion.p 
+
+//         <motion.p
 //           className="text-xl md:text-2xl text-gray-700 mb-8 max-w-md"
 //           initial={{ opacity: 0, y: 20 }}
 //           animate={{ opacity: 1, y: 0 }}
@@ -159,7 +171,7 @@ export default Hero;
 //           Experience clarity like never before with our cutting-edge eye care technology and expert team.
 //         </motion.p>
 
-//         <motion.button 
+//         <motion.button
 //           className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
 //           initial={{ opacity: 0, y: 20 }}
 //           animate={{ opacity: 1, y: 0 }}
@@ -185,10 +197,10 @@ export default Hero;
 //           />
 //           <g id="eye-1" className="eye">
 //             <circle cx="100" cy="50" r="30" fill="white" stroke="#4A5568" strokeWidth="4" />
-//             <motion.circle 
-//               cx="100" 
-//               cy="50" 
-//               r="15" 
+//             <motion.circle
+//               cx="100"
+//               cy="50"
+//               r="15"
 //               fill="#2B6CB0"
 //               animate={calculateEyePosition(1)}
 //             />
@@ -197,7 +209,7 @@ export default Hero;
 //       </div>
 
 //       {/* Abstract shapes */}
-//       <motion.div 
+//       <motion.div
 //         className="absolute left-10 bottom-10 w-20 h-20 bg-blue-200 rounded-full"
 //         animate={{
 //           scale: [1, 1.2, 1],
@@ -205,7 +217,7 @@ export default Hero;
 //         }}
 //         transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
 //       />
-//       <motion.div 
+//       <motion.div
 //         className="absolute right-40 top-20 w-16 h-16 bg-gray-300 rounded-lg"
 //         animate={{
 //           y: [0, -20, 0],

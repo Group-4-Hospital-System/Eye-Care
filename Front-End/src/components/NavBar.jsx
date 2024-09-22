@@ -46,7 +46,7 @@
 //               >
 //                 <Link
 //                   to={path}
-//                   className="text-mintD font-bold text-l hover:text-mint transition duration-300"
+//                   className="text-mint font-bold text-l hover:text-mint transition duration-300"
 //                 >
 //                   {path === "/"
 //                     ? "Home"
@@ -78,24 +78,144 @@
 
 // export default NavBar;
 
-import { Link } from "react-router-dom";
+// import React from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import { motion } from "framer-motion";
+// import { useSelector, useDispatch } from "react-redux";
+// import { logout } from "../features/auth/authSlice"; // Ensure this path is correct
+// import logo from "../assets/logo.png";
+
+// const NavBar = () => {
+//   const [scrolled, setScrolled] = React.useState(false);
+//   const user = useSelector((state) => state.auth.user);
+//   const isLoggedIn = !!user;
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   React.useEffect(() => {
+//     const handleScroll = () => {
+//       const isScrolled = window.scrollY > 10;
+//       if (isScrolled !== scrolled) {
+//         setScrolled(isScrolled);
+//       }
+//     };
+
+//     document.addEventListener("scroll", handleScroll);
+
+//     return () => {
+//       document.removeEventListener("scroll", handleScroll);
+//     };
+//   }, [scrolled]);
+
+//   const handleLogout = () => {
+//     dispatch(logout());
+//   };
+
+//   const handleProtectedLink = (path) => {
+//     if (isLoggedIn) {
+//       navigate(path);
+//     } else {
+//       navigate("/login");
+//     }
+//   };
+
+//   const navLinks = [
+//     { path: "/", label: "Home" },
+//     { path: "/profile", label: "Profile", protected: true },
+//     { path: "/appointments", label: "Appointments", protected: true },
+//     { path: "/contactus", label: "Contact Us" },
+//   ];
+
+//   if (user && user.role === "admin") {
+//     navLinks.push({ path: "/admin", label: "Admin" });
+//   }
+
+//   return (
+//     <nav
+//       className={`py-2 fixed w-full top-0 z-50 transition-all duration-300 ${
+//         scrolled ? "bg-white shadow-lg" : "bg-transparent"
+//       }`}
+//     >
+//       <div className="container mx-auto flex justify-between items-center">
+//         {/* Logo Section */}
+//         <div className="text-mint text-xl font-bold">
+//           <Link to="/">
+//             <img src={logo} alt="Logo" width="70px" />
+//           </Link>
+//         </div>
+
+//         {/* Nav Links */}
+//         <div className="space-x-6">
+//           {navLinks.map((link, index) => (
+//             <motion.div
+//               key={index}
+//               whileHover={{ scale: 1.1 }}
+//               whileTap={{ scale: 0.9 }}
+//               className="inline-block"
+//             >
+//               {link.protected ? (
+//                 <button
+//                   onClick={() => handleProtectedLink(link.path)}
+//                   className="text-mintD font-bold text-l hover:text-mint transition duration-300"
+//                 >
+//                   {link.label}
+//                 </button>
+//               ) : (
+//                 <Link
+//                   to={link.path}
+//                   className="text-mintD font-bold text-l hover:text-mint transition duration-300"
+//                 >
+//                   {link.label}
+//                 </Link>
+//               )}
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         {/* Login/Logout Button */}
+//         <motion.div
+//           whileHover={{ scale: 1.1 }}
+//           whileTap={{ scale: 0.9 }}
+//           className="inline-block"
+//         >
+//           {isLoggedIn ? (
+//             <button
+//               onClick={handleLogout}
+//               className="px-4 py-2 bg-mintD text-white rounded-md hover:bg-mint transition duration-300"
+//             >
+//               Logout
+//             </button>
+//           ) : (
+//             <Link
+//               to="/login"
+//               className="px-4 py-2 bg-mintD text-white rounded-md hover:bg-mint transition duration-300"
+//             >
+//               Login
+//             </Link>
+//           )}
+//         </motion.div>
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default NavBar;
+
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice"; // Ensure this path is correct
 import logo from "../assets/logo.png";
 
 const NavBar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = !!user;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // Helper function to get the value of a specific cookie
-  const getCookieValue = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
-    return null;
-  };
-
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
@@ -103,74 +223,128 @@ const NavBar = () => {
       }
     };
 
-    // Check for the cookie when the component mounts
-    const checkLoginStatus = () => {
-      const cookieValue = getCookieValue(""); // Replace "authToken" with your actual cookie name
-      console.log("Cookie Value:", cookieValue); // Debugging: Check if the cookie is present
-      setIsLoggedIn(!!cookieValue); // Set isLoggedIn based on whether the cookie exists
-    };
-
     document.addEventListener("scroll", handleScroll);
-    checkLoginStatus(); // Run the check on component mount
 
     return () => {
       document.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const handleProtectedLink = (path) => {
+    if (isLoggedIn) {
+      navigate(path);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/profile", label: "Profile", protected: true },
+    { path: "/appointments", label: "Appointments", protected: true },
+    { path: "/contactus", label: "Contact Us" },
+  ];
+
+  if (user && user.role === "admin") {
+    navLinks.push({ path: "/admin", label: "Admin" });
+  }
+
   return (
-    <nav
-      className={`py-2 fixed w-full top-0 z-50 transition-all duration-300 ${
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className={`py-4 fixed w-full top-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-white shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center px-6">
         {/* Logo Section */}
-        <div className="text-mint text-xl font-bold">
+        <motion.div className="text-xl font-bold" whileHover={{ scale: 1.05 }}>
           <Link to="/">
-            <img src={logo} alt="Logo" width="70px" />
+            <img src={logo} alt="Logo" className="h-12 w-auto" />
           </Link>
-        </div>
+        </motion.div>
 
         {/* Nav Links */}
-        <div className="space-x-6">
-          {["/", "/profile", "/appointments", "/Contactus", "/admin"].map(
-            (path, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="inline-block"
-              >
-                <Link
-                  to={path}
-                  className="text-mintD font-bold text-l hover:text-mint transition duration-300"
+        <div className="space-x-6 hidden md:flex">
+          {navLinks.map((link, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.1, color: "#34D399" }} // Green hover effect
+              whileTap={{ scale: 0.9 }}
+              className="inline-block"
+            >
+              {link.protected ? (
+                <button
+                  onClick={() => handleProtectedLink(link.path)}
+                  className="text-gray-700 font-semibold hover:text-mint transition duration-300"
                 >
-                  {path === "/"
-                    ? "Home"
-                    : path.split("/")[1].charAt(0).toUpperCase() +
-                      path.split("/")[1].slice(1)}
+                  {link.label}
+                </button>
+              ) : (
+                <Link
+                  to={link.path}
+                  className="text-gray-700 font-semibold hover:text-mint transition duration-300"
+                >
+                  {link.label}
                 </Link>
-              </motion.div>
-            )
-          )}
+              )}
+            </motion.div>
+          ))}
         </div>
+
+        {/* Mobile Menu Button */}
+        <motion.div
+          className="md:hidden flex items-center"
+          whileHover={{ scale: 1.1 }}
+        >
+          <button className="text-gray-700 hover:text-mint">
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </motion.div>
 
         {/* Login/Logout Button */}
         <motion.div
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="inline-block"
+          className="inline-block ml-4"
         >
-          <Link
-            to={isLoggedIn ? "/logout" : "/login"}
-            className="px-4 py-2 bg-mintD text-white rounded-md hover:bg-mint transition duration-300"
-          >
-            {isLoggedIn ? "Logout" : "Login"}
-          </Link>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-mintD text-white rounded-md hover:bg-mint transition duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="px-4 py-2 bg-mintD text-white rounded-md hover:bg-mint transition duration-300"
+            >
+              Login
+            </Link>
+          )}
         </motion.div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

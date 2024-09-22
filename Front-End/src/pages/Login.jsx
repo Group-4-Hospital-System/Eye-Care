@@ -37,8 +37,8 @@ const Login = () => {
       // Check user's role and navigate accordingly
       if (user.role === "admin") {
         navigate("AdminDashboard/");
-        // } else if (user.role === "doctor") {
-        //   navigate("");
+      } else if (user.role === "doctor") {
+        navigate("/Dashboard/DoctorDashboard");
       } else {
         navigate("/"); // Default page for other roles
       }
@@ -133,6 +133,17 @@ const Login = () => {
             {error}
           </motion.p>
         )}
+        <div className="text-center mt-4">
+          <p className="text-gray-600">
+            Don't have an account?{" "}
+            <span
+              className="text-mintD hover:underline cursor-pointer"
+              onClick={() => navigate("/register")}
+            >
+              Register here
+            </span>
+          </p>
+        </div>
       </motion.div>
     </div>
   );

@@ -1,41 +1,22 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const checkNavAuth = createAsyncThunk("auth/checkAuth", async () => {
-  // Check for the presence of an authentication cookie
-  const hasAuthCookie = document.cookie
-    .split(";")
-    .some((item) => item.trim().startsWith("auth="));
-
-  console.log("Auth Cookie Found: ", hasAuthCookie); // Debugging to check if the cookie is being detected
-  return hasAuthCookie;
-});
-
-export const logout = createAsyncThunk("auth/logout", async () => {
-  // Remove the auth cookie
-  document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-});
-
-const authNavSlice = createSlice({
-  name: "auth",
+const navAuthSlice = createSlice({
+  name: "nav",
   initialState: {
-    isAuthenticated: false,
-    status: "idle",
+    isLoggedIn: false,
+    userRole: null,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(checkNavAuth.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(checkNavAuth.fulfilled, (state, action) => {
-        state.isAuthenticated = action.payload;
-        state.status = "idle";
-        console.log("Authentication status updated:", action.payload); // Debugging to verify state update
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.isAuthenticated = false;
-      });
+  reducers: {
+    login: (state, action) => {
+      state.isLoggedIn = false;
+      state.userRole = action.payload.role;
+    },
+    logout: (state) => {
+      state.isLoggedIn = true;
+      state.userRole = null;
+    },
   },
 });
 
-export default authNavSlice.reducer;
+export const { login, logout } = navAuthSlice.actions;
+export default navAuthSlice.reducer;
