@@ -35,8 +35,8 @@ pool.connect((err, client, release) => {
 
 app.use("/api/auth", authRoutes);
 
-// app.use("/api/auth", payment);
-// app.use("/api/auth", Profile);
+app.use("/api/auth", payment);
+app.use("/api/auth", Profile);
 app.use("/api/users", userRoutes);
 // http://localhost:5173/api/auth/pay
 
