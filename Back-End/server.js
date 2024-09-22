@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -11,8 +12,9 @@ const Profile = require("./routes/profileRout");
 const userRoutes = require("./routes/appointmentRoutes");
 const staffRouter = require("./routes/staffRouter");
 const medicalRecordsRouter = require("./routes/medicalRecordsRouter");
-
+const feedbackRoutes = require('./routes/feedbackRoutes');
 const cookieParser = require("cookie-parser");
+
 
 dotenv.config();
 
@@ -35,12 +37,12 @@ pool.connect((err, client, release) => {
 
 app.use("/api/auth", authRoutes);
 
-// app.use("/api/auth", payment);
-// app.use("/api/auth", Profile);
-app.use("/api/users", userRoutes);
-// http://localhost:5173/api/auth/pay
 
+ app.use("/api/auth", payment);
+ app.use("/api/auth", Profile);
 app.use("/api/users", userRoutes);
+app.use('/api/feedback', feedbackRoutes);
+// http://localhost:5173/api/auth/pay
 app.use("/api/staff", staffRouter);
 app.use("/api/medical-records", medicalRecordsRouter);
 
