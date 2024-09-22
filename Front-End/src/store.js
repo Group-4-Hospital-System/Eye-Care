@@ -8,17 +8,19 @@ import ContactMessages from "./features/Admin/ContactMessages";
 
 import doctorReducer from "./features/Doctors/doctorSlices";
 import appointmentsReducer from "./features/Doctors/appointmentsSlice";
-
+import Appointments from "./features/Admin/Appointments";
+import AdminSlice from "./features/Admin/AdminSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
     doctors: doctorReducer,
     appointments: appointmentsReducer,
-
+    Admin:AdminSlice,
     Patient: PatientSlice,
     Doctor: DoctorSlice,
     contactMessages: ContactMessages,
+    appointments: Appointments,
   },
 });
 

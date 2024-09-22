@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Home,
   Users,
@@ -12,22 +12,49 @@ import {
   CalendarCog,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom"; // استيراد useLocation من react-router-dom
-
+import useFetchAdmin from "../../../hooks/useFetchAdmin";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const navigate = useNavigate();
+  const { admins, isLoading, adminStatus } = useFetchAdmin(); // استخدام الهوك
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (adminStatus === "failed") {
+    return <div>Error loading admin data</div>;
+  }
   const menuItems = [
     { icon: Home, text: "Home", path: "/Dashboard" },
     { icon: Users, text: "Users", path: "/Dashboard/users" },
     { icon: BriefcaseMedical, text: "Doctors", path: "/Dashboard/Doctors" },
-    { icon: CalendarCog, text: "Appointments", path: "/Dashboard/Appointments" },
+    {
+      icon: CalendarCog,
+      text: "Appointments",
+      path: "/Dashboard/Appointments",
+    },
     { icon: Contact, text: "Contact Us", path: "/Dashboard/ContactUS" },
-    
   ];
-
+  
+    const handleLogout = async () => {
+      try {
+        const response = await axios.post('http://localhost:5000/api/admin/LogOutAdmin', {}, {
+          withCredentials: true 
+        });
+  
+        if (response.status === 200) {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('خطأ في تسجيل الخروج', error);
+      }
+    };
+ 
   return (
     <>
       <button
@@ -66,10 +93,11 @@ const Sidebar = () => {
                 </li>
               ))}
               <Link
-                to="/LogIn"
+                onClick={handleLogout}
                 className={`flex items-center p-2 rounded transition-colors duration-200 hover:bg-[#ff0000] text-gray-300`}
               >
-                <LogOut className="mr-2" />Log Out
+                <LogOut className="mr-2" />
+                Log Out
               </Link>
             </ul>
           </nav>
@@ -77,12 +105,15 @@ const Sidebar = () => {
 
         <div className="pt-6 border-t border-gray-700">
           <div className="flex items-center space-x-2">
-            <img
-              src="https://via.placeholder.com/40"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full"
-            />
-            <span className="font-semibold">Abdulrahman</span>
+            <div className="flex-shrink-0 w-10 h-10">
+              <img
+                className="w-full h-full rounded-full"
+                src={`https://ui-avatars.com/api/?name=${admins.user.name}&background=random`}
+                alt=""
+              />
+            </div>
+
+            <span className="font-semibold">{admins.user.name}</span>
           </div>
         </div>
       </div>
