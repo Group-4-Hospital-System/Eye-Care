@@ -60,7 +60,7 @@ function App() {
 
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
 
-        <Route path="/Profil" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/Dashboard/DoctorDashboard"
           element={<DoctorDashboard />}
