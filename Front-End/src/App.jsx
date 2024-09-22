@@ -60,7 +60,7 @@ function App() {
 
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
 
-          <Route path="/Profil" element={<ProfilePage />} />
+        <Route path="/Profil" element={<ProfilePage />} />
         <Route
           path="/Dashboard/DoctorDashboard"
           element={<DoctorDashboard />}
@@ -75,7 +75,6 @@ function App() {
         />
         <Route path="/Dashboard/ContactUS" element={<ContactUsDashboard />} />
         {/* End Of Admin Dashboard */}
-
       </Routes>
     </Router>
   );

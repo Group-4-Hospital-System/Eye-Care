@@ -122,7 +122,8 @@
 // );
 
 // export default CheckoutPage;
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -135,12 +136,43 @@ import Swal from "sweetalert2";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProfile } from "../features/Profile/ProfileSlice";
+
 // Initialize Stripe
 const stripePromise = loadStripe(
   "pk_test_51Po3xJA4L1QDrrEEECST7zzuz3EwgAvliyrzirIXNUtRvRBxHoSGucEZfKX6JyA1Z5A5OpSdpSh5VUuvkwGTFAj2007tEPrtx7"
 );
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const profile = useSelector((state) => state.Profile.profile);
+  const profileStatus = useSelector((state) => state.Profile.status);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!profile) {
+      dispatch(fetchProfile());
+    }
+  }, [dispatch, profile]);
+
+  useEffect(() => {
+    if (profileStatus === "idle") {
+      dispatch(fetchProfile());
+    }
+  }, [dispatch, profileStatus]);
+
+  useEffect(() => {
+    setIsLoading(profileStatus === "loading");
+  }, [profileStatus]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  console.log(profile.users.name);
   return (
     <>
       <div className="bg-gradient-to-br from-white to-[#eafffb] min-h-screen flex items-center justify-center p-4 font-sans">
@@ -157,7 +189,7 @@ const CheckoutPage = () => {
                 <InfoItem
                   icon={<User className="w-5 h-5" />}
                   label="Patient Name"
-                  value="Ahmed Mohammed"
+                  value={profile.users.name}
                 />
                 <InfoItem
                   icon={<User className="w-5 h-5" />}
