@@ -37,11 +37,9 @@
     "recharts": "^2.12.7",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
-
     "sweetalert2": "^11.14.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
-
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -36,7 +36,7 @@ const Login = () => {
     if (user) {
       // Check user's role and navigate accordingly
       if (user.role === "admin") {
-        navigate("AdminDashboard/");
+        navigate("/Dashboard");
       } else if (user.role === "doctor") {
         navigate("/Dashboard/DoctorDashboard");
       } else {
