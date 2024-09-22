@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ import NavBar from "../components/NavBar";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
+
 const DoctorDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const DoctorDetails = () => {
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+  const [feedback, setFeedback] = useState('');
+  const [feedbackList, setFeedbackList] = useState([]);
 
   const {
     selectedDoctor,
@@ -42,7 +46,9 @@ const DoctorDetails = () => {
   useEffect(() => {
     dispatch(fetchDoctorById(id));
     dispatch(fetchDoctorAppointments(id));
+    fetchFeedback();
   }, [dispatch, id]);
+
 
   useEffect(() => {
     const bookedAppointment = Cookies.get("bookedAppointment");
@@ -79,24 +85,59 @@ const DoctorDetails = () => {
     );
   }
 
-  if (!selectedDoctor) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col items-center justify-center h-screen bg-gray-100"
-      >
-        <User className="text-gray-400 w-16 h-16 mb-4" />
-        <p className="text-xl text-gray-800">No doctor found.</p>
-      </motion.div>
-    );
-  }
+  const fetchFeedback = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/feedback/${id}`);
+      const data = await response.json();
+      setFeedbackList(data);
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+    }
+  };
+
+  const handleSubmitFeedback = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:5000/api/feedback`, {
+        doctor_id: id,
+        comment: feedback,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Cookies.get('token')}`
+        },
+        withCredentials: true
+      });
+
+
+      if (response.status === 201) {
+        setFeedback('');
+        fetchFeedback();
+        Swal.fire({
+          title: 'Feedback Submitted',
+          text: 'Thank you for your feedback!',
+          icon: 'success',
+          confirmButtonColor: '#10B981',
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to submit feedback. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#EF4444',
+      });
+    }
+  };
 
   const handleBookAppointment = (appointment) => {
     Swal.fire({
-      title: "Confirm Booking",
-      text: "Are you sure you want to book this appointment ?",
-      icon: "question",
+
+      title: 'Confirm Booking',
+      text: 'Are you sure you want to book this appointment?',
+      icon: 'question',
+
       showCancelButton: true,
       confirmButtonColor: "#10B981",
       cancelButtonColor: "#EF4444",
@@ -147,6 +188,45 @@ const DoctorDetails = () => {
     setSelectedDate(newDate);
   };
 
+  if (doctorStatus === 'loading' || appointmentsStatus === 'loading') {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="flex justify-center items-center h-screen bg-gray-100"
+      >
+        <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-mintD"></div>
+      </motion.div>
+    );
+  }
+
+  if (doctorStatus === 'failed' || appointmentsStatus === 'failed') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center h-screen bg-gray-100"
+      >
+        <XCircle className="text-red-500 w-16 h-16 mb-4" />
+        <p className="text-xl text-gray-800">Error: {doctorError || appointmentsError}</p>
+      </motion.div>
+    );
+  }
+
+  if (!selectedDoctor) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center justify-center h-screen bg-gray-100"
+      >
+        <User className="text-gray-400 w-16 h-16 mb-4" />
+        <p className="text-xl text-gray-800">No doctor found.</p>
+      </motion.div>
+    );
+  }
+
   return (
     <>
       <NavBar />
@@ -154,6 +234,7 @@ const DoctorDetails = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+
         className=" min-h-screen"
       >
         <div className="container mx-auto py-12 px-4 mt-20">
@@ -291,6 +372,7 @@ const DoctorDetails = () => {
               </p>
             )}
           </motion.div>
+
         </div>
       </motion.div>
     </>
