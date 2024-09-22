@@ -54,15 +54,15 @@
 - **[Muhammad Othman Shurrab] - Scrum Master, Full Stack Developer**  
   Responsible for overseeing the project, handling backend architecture, and managing database design.
 - **[Rami AbedElrahim Ghazzawi] - Product Owner, Full Stack Developer**  
-  Managed user requirements, feature prioritization, and product vision.
+  Managed user requirements, and The doctor page.
 - **[Areej Omar Abumuhfouz] - QA, Full Stack Developer**  
-  Focused on ensuring quality across the platform, including testing features and user interactions.
+  Focused on ensuring quality across the platform, including testing features and user interactions, Also building the appointments page.
 - **[Duaa Tariq Khamis] - Full Stack Developer**  
-  Handled user authentication, API development, and integration.
+  Handled user authentication, API development, and integration and The Home page.
 - **[Zeyad Maher Faiyoymi] - Full Stack Developer**  
-  Managed the billing system and payment integrations.
+  Managed the billing system and payment integrations and the profile page.
 - **[AbdelRahman Mohammad Alwabarneh] - Full Stack Developer**  
-  Managed the billing system and payment integrations.
+  Managed the Admin page.
 
 ## Important Links
 ### Project Management:
