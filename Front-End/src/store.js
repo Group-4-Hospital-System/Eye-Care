@@ -13,11 +13,11 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     user: userReducer,
-    doctors: doctorReducer,
+    doctor: doctorReducer,
     appointments: appointmentsReducer,
     Profile: ProfileSlice,
     Patient: PatientSlice,
-    Doctor: DoctorSlice,
+    // doctor: DoctorSlice,
     contactMessages: ContactMessages,
   },
 });
