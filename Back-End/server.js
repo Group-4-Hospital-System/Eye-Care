@@ -6,6 +6,7 @@ const pool = require('./config/db'); // Import the database pool
 const authRoutes = require('./routes/authRoutes'); // Import your auth routes
 const userRoutes = require('./routes/appointmentRoutes');
 const cookieParser = require("cookie-parser")
+const feedbackRoutes = require('./routes/feedbackRoutes');
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/users', userRoutes);
 
+app.use('/api/feedback', feedbackRoutes);
 
 
 // Start the server
