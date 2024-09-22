@@ -60,7 +60,6 @@ import Navbar from "../components/NavBar";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const profile = useSelector((state) => state.Profile.profile);
   const profileStatus = useSelector((state) => state.Profile.status);
