@@ -81,6 +81,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile } from "../features/Profile/ProfileSlice";
 import axios from "axios";
+import Navbar from "../components/NavBar";
 
 function OrdersPage() {
   const dispatch = useDispatch();
@@ -131,38 +132,45 @@ function OrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f0f8f7] p-8">
-      <h1 className="text-4xl font-bold text-center text-[#1f7b6f] mb-8">
-        Orders List
-      </h1>
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <div className="bg-[#f7f7f7] rounded-lg p-4 mb-6 hover:bg-[#ebf0ef] transition duration-300">
-          <h2 className="text-2xl font-semibold mb-2 text-[#1a6960]">Orders</h2>
-          {fetchedOrders.length > 0 ? (
-            fetchedOrders.map((order) => (
-              <div key={order.bill_id} className="mb-4">
-                <p className="text-gray-700">
-                  <span className="font-bold">Doctor:</span> {order.doctor_name}
-                </p>
-                <p className="text-gray-700">
-                  <span className="font-bold">Patient:</span>{" "}
-                  {profile.users.name}
-                </p>
-                <p className="text-gray-700">
-                  <span className="font-bold">Appointment:</span>{" "}
-                  {order.appointment_start}
-                </p>
-                <p className="text-gray-700">
-                  <span className="font-bold">Amount Paid:</span> {order.amount}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-700">No orders found.</p>
-          )}
+    <>
+      <Navbar />
+      <div className="bg-white min-h-screen pt-20">
+        <h1 className="text-4xl font-bold text-center text-[#1f7b6f] mb-8">
+          Orders List
+        </h1>
+        <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-[#f7f7f7] rounded-lg p-4 mb-6 hover:bg-[#ebf0ef] transition duration-300">
+            <h2 className="text-2xl font-semibold mb-2 text-[#1a6960]">
+              Orders
+            </h2>
+            {fetchedOrders.length > 0 ? (
+              fetchedOrders.map((order) => (
+                <div key={order.bill_id} className="mb-4">
+                  <p className="text-gray-700">
+                    <span className="font-bold">Doctor:</span>{" "}
+                    {order.doctor_name}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Patient:</span>{" "}
+                    {profile.users.name}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Appointment:</span>{" "}
+                    {order.appointment_start}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-bold">Amount Paid:</span>{" "}
+                    {order.amount}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-700">No orders found.</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
