@@ -48,6 +48,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import OrdersPage from "./BillingPage";
 import { fetchProfile } from "../features/Profile/ProfileSlice";
 import {
   FaEdit,
@@ -133,11 +134,11 @@ const ProfilePage = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen pt-20">
+      <div className="bg-white min-h-screen pt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="bg-white shadow-2xl rounded-2xl overflow-hidden">
             <div className="md:flex">
-              <div className="md:w-1/3 bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-white">
+              <div className="md:w-1/3 bg-mint p-8 text-white">
                 <div className="text-center">
                   <img
                     src={
@@ -147,33 +148,14 @@ const ProfilePage = () => {
                     alt="Profile"
                     className="w-32 h-32 rounded-full border-4 border-white shadow-lg mx-auto mb-4"
                   />
-                  <h2 className="text-2xl font-bold mb-2">
+                  <h2 className="text-2xl   font-bold mb-2">
                     {profile.users.name}
                   </h2>
-                  <p className="text-blue-200 mb-4">{profile.users.email}</p>
-                </div>
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-4">
-                    Achievement Board
-                  </h3>
-                  <div className="flex items-center justify-between text-blue-200 mb-3">
-                    <span className="flex items-center">
-                      <FaCheckCircle className="mr-2" />
-                      Completed Projects
-                    </span>
-                    <span>23</span>
-                  </div>
-                  <div className="flex items-center justify-between text-blue-200">
-                    <span className="flex items-center">
-                      <FaMoneyBillWave className="mr-2" />
-                      Sales Made
-                    </span>
-                    <span>15,000 $</span>
-                  </div>
+                  <p className=" mb-4">{profile.users.email}</p>
                 </div>
               </div>
               <div className="md:w-2/3 p-8">
-                <h3 className="text-2xl font-bold mb-6 text-gray-800">
+                <h3 className="text-2xl font-bold mb-6 text-mintD">
                   Profile Information
                 </h3>
                 <ProfileField
@@ -186,16 +168,7 @@ const ProfilePage = () => {
                   name="email"
                   value={profile.users.email}
                 />
-                <ProfileField
-                  label="Phone Number"
-                  name="phoneNum"
-                  value={editFields.phoneNum}
-                />
-                <ProfileField
-                  label="Location"
-                  name="location"
-                  value={editFields.location}
-                />
+
                 <ProfileField
                   label="Password"
                   name="password"
@@ -205,7 +178,7 @@ const ProfilePage = () => {
                 <div className="mt-8 flex justify-center">
                   <button
                     onClick={handleEditClick}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center"
+                    className="px-6 py-3 bg-[#1a6960] text-white rounded-full hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center"
                   >
                     <FaSave className="mr-2" />
                     Save Changes
@@ -216,6 +189,8 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      <OrdersPage />
     </>
   );
 };

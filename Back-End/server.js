@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes"); // Import your auth routes
 const payment = require("./routes/payment");
 const Profile = require("./routes/profileRout");
 const userRoutes = require("./routes/appointmentRoutes");
+const Billing = require("./routes/BillingInfoRouts");
 const staffRouter = require("./routes/staffRouter");
 const medicalRecordsRouter = require("./routes/medicalRecordsRouter");
 const feedbackRoutes = require("./routes/feedbackRoutes");
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", payment);
 app.use("/api/auth", Profile);
 app.use("/api/users", userRoutes);
+app.use("/api/auth", Billing);
 app.use("/api/feedback", feedbackRoutes);
 // http://localhost:5173/api/auth/pay
 app.use("/api/staff", staffRouter);

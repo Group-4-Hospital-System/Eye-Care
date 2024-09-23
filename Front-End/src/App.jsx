@@ -41,6 +41,8 @@ import "./index.css";
 // import NavBar from './components/NavBar'; // المكون الأساسي لعرض الـ Navbar
 import Doctors from "./pages/Doctors";
 import DoctorDetails from "./pages/DoctorDetails";
+import OrdersPage from "./pages/BillingPage";
+
 function App() {
   return (
     <Router>
@@ -51,6 +53,7 @@ function App() {
 
         <Route path="/Appointments" element={<Doctors />} />
         <Route path="/Doctors/:id" element={<DoctorDetails />} />
+        <Route path="/OrdersPage" element={<OrdersPage />} />
 
         {/* <Route path="/profile" element={<Profile />} /> */}
         {/* إضافة باقي المسارات مثل المواعيد والسجلات والفواتير */}
@@ -63,7 +66,7 @@ function App() {
 
         <Route path="/Contactus" element={<ContactUsPage />} />
         <Route path="/Aboutus" element={<AboutUs />} />
-        <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route path="/Checkout" element={<CheckoutPage />} />
 
         <Route
           path="/Dashboard/DoctorDashboard"
