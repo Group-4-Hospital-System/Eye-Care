@@ -250,7 +250,7 @@ const ContactUsPage = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-96 border-mint focus:border-mintD focus:ring-[#3cb371]"
+                          className="w-96  border-[#4cbb7e] focus:border-[#3cb371] focus-visible:ring-[#3cb371]"
                           required
                           disabled={isSubmitting}
                         />
@@ -269,7 +269,7 @@ const ContactUsPage = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full border-[#98FB98] focus:border-[#3cb371] focus:ring-[#3cb371]"
+                        className="w-full  border-[#4cbb7e] focus:border-[#3cb371] focus-visible:ring-[#3cb371]"
                         required
                         disabled={isSubmitting}
                       />
@@ -286,7 +286,7 @@ const ContactUsPage = () => {
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                        className="w-full border-[#98FB98] focus:border-[#3cb371] focus:ring-[#3cb371]"
+                        className="w-full border-[#4cbb7e] focus:border-[#3cb371] focus-visible:ring-[#3cb371]"
                         rows={6}
                         required
                         disabled={isSubmitting}

@@ -9,6 +9,7 @@ import doctorReducer from "./features/Doctors/doctorSlices";
 import appointmentsReducer from "./features/Doctors/appointmentsSlice";
 import navAuthSlice from "./features/Nav/navAuthSlice";
 import contactReducer from "./features/Contact us/ContactSlice";
+import ProfileSlice from "./features/Profile/ProfileSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -16,8 +17,9 @@ const store = configureStore({
     doctors: doctorReducer,
     appointments: appointmentsReducer,
     contact: contactReducer,
+    Profile: ProfileSlice,
     Patient: PatientSlice,
-    Doctor: DoctorSlice,
+    doctor: DoctorSlice,
     contactMessages: ContactMessages,
     nav: navAuthSlice,
     // authNav: authNavReducer,

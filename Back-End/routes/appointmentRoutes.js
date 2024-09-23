@@ -10,7 +10,7 @@ const {
   getAppointmentsByDoctorId,
   getallAppointmentswithDoctorsAndUsers,
   changeAppiontmentStatus,
-  // getDoctorAppointments
+  getDoctorAppointments,
 } = require("../controllers/appointmentController");
 const auth = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -25,7 +25,7 @@ router.delete("/appointments/:id", deleteAppointment);
 router.get("/appointments/:doctorId", getAppointmentsByDoctorId);
 router.post("/change-appointment-status", changeAppiontmentStatus);
 
-// router.get('/appointments/:doctorId', getDoctorAppointments);
+router.get("/appointmentsAA/:doctorId", getDoctorAppointments);
 
 router.get(
   "/getallAppointmentswithDoctorsAndUsers",

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home"; // صفحة البداية
+import HomePage from "./pages/Home/Home";
 import Login from "./pages/Login"; // مكون تسجيل الدخول
 import Register from "./pages/Register"; // مكون التسجيل
 import CheckoutPage from "./pages/Checkout";
@@ -45,7 +45,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -80,6 +80,7 @@ function App() {
             path="/Dashboard/Appointments"
             element={<AppointmentsDashboard />}
           />
+          <Route path="/Profile" element={<ProfilePage />} />
         </Route>
         <Route path="/Dashboard/ContactUS" element={<ContactUsDashboard />} />
         {/* End Of Admin Dashboard */}
