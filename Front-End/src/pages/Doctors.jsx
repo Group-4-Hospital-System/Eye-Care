@@ -325,7 +325,10 @@ const Doctors = () => {
                     <div className="flex items-center">
                       <FileText className="text-mintD mr-1" size={18} />
                       <span className="text-gray-600 text-sm">
-                        Bio: {doctor.bio.slice(0, 20) + "....."}
+                        Bio:{" "}
+                        {doctor.bio
+                          ? doctor.bio.slice(0, 20) + "..."
+                          : "No bio available"}{" "}
                       </span>
                     </div>
                   </div>
