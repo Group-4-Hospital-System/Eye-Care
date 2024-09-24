@@ -184,7 +184,7 @@ import NavBar from "../components/NavBar";
 
 const Doctors = () => {
   const dispatch = useDispatch();
-  const { doctors, status, error } = useSelector((state) => state.doctor);
+  const { doctors, status, error } = useSelector((state) => state.doctors);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -328,7 +328,7 @@ const Doctors = () => {
                         Bio:{" "}
                         {doctor.bio
                           ? doctor.bio.slice(0, 20) + "..."
-                          : "No bio available"}
+                          : "No bio available"}{" "}
                       </span>
                     </div>
                   </div>

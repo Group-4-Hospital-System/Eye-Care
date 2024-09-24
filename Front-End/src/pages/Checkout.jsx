@@ -125,6 +125,7 @@
 
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import ProfilePage from "./ProfilePage";
 import {
   Elements,
   CardElement,
@@ -261,6 +262,7 @@ const InputField = ({ label, id, placeholder, className = "" }) => (
 );
 
 const CheckoutForm = () => {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -286,6 +288,7 @@ const CheckoutForm = () => {
       const { clientSecret } = response.data;
 
       // استخدام Stripe لتأكيد الدفع
+
       const { error: stripeError, paymentIntent } =
         await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
@@ -297,15 +300,28 @@ const CheckoutForm = () => {
           },
         });
 
+      // تحقق من نجاح الدفع
+      if (stripeError) {
+        console.error("Error:", stripeError.message);
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        console.log("Payment succeeded!");
+
+        // إذا كانت عملية الدفع ناجحة، قم بالتنقل إلى صفحة "Profile"
+        navigate("/profile");
+      }
+
       if (stripeError) {
         setError(stripeError.message);
       } else if (paymentIntent.status === "succeeded") {
-        Swal.fire({
-          title: "Payment Successful!",
-          text: "Thank you for your payment.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+        Swal.fire(
+          {
+            title: "Payment Successful!",
+            text: "Thank you for your payment.",
+            icon: "success",
+            confirmButtonText: "OK",
+          },
+          navigate("/profile")
+        );
       }
 
       setProcessing(false);

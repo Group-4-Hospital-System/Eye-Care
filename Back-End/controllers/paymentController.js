@@ -20,7 +20,7 @@ const createPaymentIntent = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5) RETURNING bill_id`,
     [
       req.user, // patient_id, إذا كان لديك قيمة افتراضية، يمكنك تعديل هذا
-      11, // appointment_id, إذا كان لديك قيمة افتراضية، يمكنك تعديل هذا
+      1, // appointment_id, إذا كان لديك قيمة افتراضية، يمكنك تعديل هذا
       amount,
       "paid",
       new Date(), // تاريخ الدفع الحالي

@@ -48,6 +48,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import OrdersPage from "./BillingPage";
 import { fetchProfile } from "../features/Profile/ProfileSlice";
 import {
   FaEdit,
@@ -188,6 +189,8 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      <OrdersPage />
     </>
   );
 };

@@ -10,10 +10,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { loading, error, user } = useSelector(state => state.auth);
+  const { loading, error, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await dispatch(login({ email, password })).unwrap();
@@ -83,7 +83,7 @@ const Login = () => {
                   className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-mintD focus:border-mintD focus:z-10 text-lg"
                   placeholder="Email address"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <Mail className="absolute right-3 top-3 h-6 w-6 text-mint" />
               </div>
@@ -102,7 +102,7 @@ const Login = () => {
                   className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-mintD focus:border-mintD focus:z-10 text-lg"
                   placeholder="Password"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <Lock className="absolute right-3 top-3 h-6 w-6 text-mint" />
               </div>
@@ -133,6 +133,17 @@ const Login = () => {
             {error}
           </motion.p>
         )}
+        <div className="text-center mt-4">
+          <p className="text-gray-600">
+            Don't have an account?{" "}
+            <span
+              className="text-mintD hover:underline cursor-pointer"
+              onClick={() => navigate("/register")}
+            >
+              Register here
+            </span>
+          </p>
+        </div>
       </motion.div>
     </div>
   );
